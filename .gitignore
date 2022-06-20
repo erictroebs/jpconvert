@@ -1,18 +1,18 @@
 # IDE directories and files
-.idea
-.vscode
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+/.idea
+/.vscode
+/*.suo
+/*.ntvs*
+/*.njsproj
+/*.sln
+/*.sw?
 
 # environments
-.env
-.venv
-env/
-venv/
-ENV/
+/.env
+/.venv
+/env/
+/venv/
+/ENV/
 
 # byte cache
 __pycache__/
