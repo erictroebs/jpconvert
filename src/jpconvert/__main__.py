@@ -1,10 +1,11 @@
 import json
+import sys
 from argparse import ArgumentParser
 
 # configure argument parser
 parser = ArgumentParser()
 
-parser.add_argument('input', help='notebook file (.ipynb)')
+parser.add_argument('input', help='notebook file (.ipynb) or - (stdin)')
 parser.add_argument('--practice', '-p', action='store_true', default=False, help='keep practice (default)')
 parser.add_argument('--solution', '-s', action='store_true', default=False, help='keep solution')
 parser.add_argument('--teaching', '-t', action='store_true', default=False, help='keep teaching')
@@ -80,8 +81,11 @@ def map_fun(cell: dict) -> dict:
 # main script
 def main():
     # read input
-    with open(args.input, 'r', encoding='utf-8') as file:
-        data = json.load(file)
+    if args.input == '-':
+        data = json.load(sys.stdin)
+    else:
+        with open(args.input, 'r', encoding='utf-8') as file:
+            data = json.load(file)
 
     # convert cells
     data['cells'] = list(map(map_fun, filter(filter_fun, data['cells'])))
