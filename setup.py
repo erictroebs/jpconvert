@@ -5,7 +5,7 @@ with open('README.md', 'r', encoding='utf-8') as file:
 
 setup(
     name='jpconvert',
-    version='0.1.0',
+    version='0.2.0',
     author='Eric Tröbs',
     author_email='eric.troebs@tu-ilmenau.de',
     description='macros for Jupyter Notebooks',

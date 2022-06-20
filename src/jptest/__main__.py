@@ -8,6 +8,7 @@ parser.add_argument('input', help='notebook file (.ipynb)')
 parser.add_argument('--practice', '-p', action='store_true', default=False, help='keep practice (default)')
 parser.add_argument('--solution', '-s', action='store_true', default=False, help='keep solution')
 parser.add_argument('--teaching', '-t', action='store_true', default=False, help='keep teaching')
+parser.add_argument('--allow-skip', action='store_true', default=False, help='do not remove cells without any macros')
 parser.add_argument('output', help='output file (.ipynb) or - (stdout, default)', nargs='?', default='-')
 
 args = parser.parse_args()
@@ -32,14 +33,20 @@ def filter_fun(cell: dict) -> bool:
     if 'source' not in cell or len(cell['source']) == 0:
         return True
 
-    if cell['source'][0].strip().lower() == '#jp-practice' and not args.practice:
-        return False
-    if cell['source'][0].strip().lower() == '#jp-solution' and not args.solution:
-        return False
-    if cell['source'][0].strip().lower() == '#jp-teaching' and not args.teaching:
-        return False
+    ml = min(3, len(cell['source']))
 
-    return True
+    if args.allow_skip and not any([
+        any([cell['source'][i].strip().lower() == '#jp-practice' for i in range(ml)]),
+        any([cell['source'][i].strip().lower() == '#jp-solution' for i in range(ml)]),
+        any([cell['source'][i].strip().lower() == '#jp-teaching' for i in range(ml)])
+    ]):
+        return True
+
+    return any([
+        any([cell['source'][i].strip().lower() == '#jp-practice' for i in range(ml)]) and args.practice,
+        any([cell['source'][i].strip().lower() == '#jp-solution' for i in range(ml)]) and args.solution,
+        any([cell['source'][i].strip().lower() == '#jp-teaching' for i in range(ml)]) and args.teaching
+    ])
 
 
 def map_fun(cell: dict) -> dict:
@@ -50,16 +57,22 @@ def map_fun(cell: dict) -> dict:
         del cell['metadata']['pycharm']
 
     # remove flags
-    if cell['cell_type'] == 'code' and 'source' in cell and len(cell['source']) > 0:
-        if cell['source'][0].strip().lower() == '#jp-practice':
-            del cell['source'][0]
-        else:
-            cell['metadata']['editable'] = False
+    if cell['cell_type'] == 'code' and 'source' in cell:
+        editable = False
 
-        if cell['source'][0].strip().lower() == '#jp-solution':
-            del cell['source'][0]
-        if cell['source'][0].strip().lower() == '#jp-teaching':
-            del cell['source'][0]
+        while len(cell['source']) > 0:
+            if cell['source'][0].strip().lower() == '#jp-practice':
+                del cell['source'][0]
+                editable = True
+            elif cell['source'][0].strip().lower() == '#jp-solution':
+                del cell['source'][0]
+            elif cell['source'][0].strip().lower() == '#jp-teaching':
+                del cell['source'][0]
+            else:
+                break
+
+        if not editable:
+            cell['metadata']['editable'] = False
 
     return cell
 
@@ -78,7 +91,11 @@ def main():
         del data['metadata']['celltoolbar']
 
     # write to stdout
-    print(json.dumps(data, indent=4))
+    if args.output == '-':
+        print(json.dumps(data, indent=4))
+    else:
+        with open(args.output, 'w') as file:
+            json.dump(data, file, indent=4)
 
 
 if __name__ == '__main__':
