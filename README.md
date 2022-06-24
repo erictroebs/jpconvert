@@ -22,7 +22,7 @@ pip install jpconvert
 python -m jpconvert <input> [<options>] [<output>]
 ```
 
-If no output file is specified, `stdout` is used instead.
+If no input file is specified, `stdin` is used instead. If no output file is specified, `stdout` is used instead.
 
 #### Macros and Options
 Multiple macros can be used per cell. Only code cells with the macro matching the output options are kept. Macros themselves are removed from the code cells.
@@ -33,7 +33,9 @@ Multiple macros can be used per cell. Only code cells with the macro matching th
 | `#jp-teaching` | `--teaching` / `-t` |
 | `#jp-solution` | `--solution` / `-s` |
 
-One may decide what happens to code cells without any macros. By default they are removed if `--allow-skip` is not used.
+One may decide what happens to code cells without any macros. By default, they are removed if `--allow-skip` is not used.
+
+Using `--remove-empty` you can remove any empty cells.
 
 
 ## Example
