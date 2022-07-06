@@ -55,7 +55,7 @@ else:
 # run pipeline
 pipeline = build_pipeline(practice, solution, teaching,
                           args.remove_without_macros, not args.keep_empty,
-                          not args.no_strip_lines, not args.keep_trailing_lines)
+                          not args.no_strip_lines, not args.keep_trailing)
 output_data = pipeline.run(input_data)
 
 # write output
