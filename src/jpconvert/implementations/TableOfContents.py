@@ -72,7 +72,7 @@ class TableOfContents(FilterCell):
                 if level in levels:
                     indent = ' ' * (levels.index(level) * 2)
                     anchor = title.replace(' ', '-')
-                    anchor = re.sub(r'[^A-Za-z0-9-]', '', anchor)
+                    anchor = re.sub(r'[^A-Za-z0-9ÄÖÜäöüß-]', '', anchor)
 
                     cell['source'].append(f'{indent}- [{title}](#{anchor})\n')
 
