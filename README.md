@@ -39,6 +39,8 @@ Multiple macros can be used per cell. Only code cells with the macro matching th
 
 The special macro `#jp-toc` can be used to create a table of contents. Up to two conditionals can be added to control the table's depth.
 
+Any cells that do not contain `#jp-practice` are set readonly. If you want to protect these cells from writing as well, add `#jp-readonly` or use `#jp-practice-ro`.
+
 
 ## Example
 Image two code cells inside your notebook:

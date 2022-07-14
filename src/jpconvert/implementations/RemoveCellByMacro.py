@@ -26,11 +26,11 @@ class RemoveCellByMacro(FilterCell):
         for line in cell['source']:
             line = line.strip()
 
-            if line == '#jp-practice':
+            if line in ['#jp-practice', '#jp-practice-ro']:
                 practice = True
-            if line == '#jp-solution':
+            elif line == '#jp-solution':
                 solution = True
-            if line == '#jp-teaching':
+            elif line == '#jp-teaching':
                 teaching = True
 
         # remove cell

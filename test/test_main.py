@@ -15,7 +15,7 @@ def test_practice():
                 build_pipeline(True, False, False, False, False, False, False))
 
     # len
-    assert len(cells) == 11
+    assert len(cells) == 13
 
     # 0
     cell = cells[0]
@@ -93,6 +93,20 @@ def test_practice():
     assert cell['source'] == []
     assert 'deletable' in cell['metadata'] and not cell['metadata']['deletable']
     assert 'editable' not in cell['metadata'] or cell['metadata']['editable']
+
+    # 11
+    cell = cells[11]
+    assert cell['cell_type'] == 'code'
+    assert cell['source'] == ["y = 'readonly'"]
+    assert 'deletable' in cell['metadata'] and not cell['metadata']['deletable']
+    assert 'editable' in cell['metadata'] and not cell['metadata']['editable']
+
+    # 12
+    cell = cells[12]
+    assert cell['cell_type'] == 'code'
+    assert cell['source'] == ["z = 'readonly'"]
+    assert 'deletable' in cell['metadata'] and not cell['metadata']['deletable']
+    assert 'editable' in cell['metadata'] and not cell['metadata']['editable']
 
 
 def test_solution():
@@ -242,7 +256,7 @@ def test_remove_without_macros():
                 build_pipeline(True, False, False, True, False, False, False))
 
     # len
-    assert len(cells) == 9
+    assert len(cells) == 11
 
     # 5
     cell = cells[5]
@@ -258,7 +272,7 @@ def test_remove_empty():
                 build_pipeline(True, False, False, False, True, False, False))
 
     # len
-    assert len(cells) == 9
+    assert len(cells) == 11
 
     # check for empty cells
     for cell in cells:
@@ -271,34 +285,38 @@ def test_toc():
 
     # 1
     assert cells[1]['cell_type'] == 'markdown'
-    assert cells[1]['source'] == ['- TOC Test\n',
-                                  '  - Code\n',
-                                  '  - Text\n',
-                                  '  - Mix\n',
-                                  '    - another heading\n',
-                                  '      - even smaller heading\n']
+    assert cells[1]['source'] == ['# Inhaltsverzeichnis\n',
+                                  '- [TOC Test](#TOC-Test)\n',
+                                  '  - [Code](#Code)\n',
+                                  '  - [Text](#Text)\n',
+                                  '  - [Mix](#Mix)\n',
+                                  '    - [another heading](#another-heading)\n',
+                                  '      - [even smaller heading](#even-smaller-heading)']
 
     # 3
     assert cells[3]['cell_type'] == 'markdown'
-    assert cells[3]['source'] == ['- Code\n',
-                                  '- Text\n',
-                                  '- Mix\n',
-                                  '  - another heading\n',
-                                  '    - even smaller heading\n']
+    assert cells[3]['source'] == ['## Inhaltsverzeichnis\n',
+                                  '- [Code](#Code)\n',
+                                  '- [Text](#Text)\n',
+                                  '- [Mix](#Mix)\n',
+                                  '  - [another heading](#another-heading)\n',
+                                  '    - [even smaller heading](#even-smaller-heading)']
 
     # 4
     assert cells[4]['cell_type'] == 'markdown'
-    assert cells[4]['source'] == ['- TOC Test\n',
-                                  '  - Code\n',
-                                  '  - Text\n',
-                                  '  - Mix\n']
+    assert cells[4]['source'] == ['# Inhaltsverzeichnis\n',
+                                  '- [TOC Test](#TOC-Test)\n',
+                                  '  - [Code](#Code)\n',
+                                  '  - [Text](#Text)\n',
+                                  '  - [Mix](#Mix)']
 
     # 5
     assert cells[5]['cell_type'] == 'markdown'
-    assert cells[5]['source'] == ['- TOC Test\n',
-                                  '  - Code\n',
-                                  '  - Text\n',
-                                  '  - Mix\n']
+    assert cells[5]['source'] == ['# Inhaltsverzeichnis\n',
+                                  '- [TOC Test](#TOC-Test)\n',
+                                  '  - [Code](#Code)\n',
+                                  '  - [Text](#Text)\n',
+                                  '  - [Mix](#Mix)']
 
 
 def test_strip_lines():

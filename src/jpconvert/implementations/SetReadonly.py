@@ -11,13 +11,18 @@ class SetReadonly(MapCell):
 
         # find practice macro
         practice = False
+        readonly = False
 
         for line in cell['source']:
-            if line.strip() == '#jp-practice':
+            line = line.strip()
+
+            if line == '#jp-practice':
                 practice = True
+            elif line in ['#jp-practice-ro', '#jp-readonly']:
+                readonly = True
 
         # set readonly
-        if not practice:
+        if not practice or readonly:
             cell['metadata']['editable'] = False
 
         return cell
