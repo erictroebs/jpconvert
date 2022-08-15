@@ -1,9 +1,13 @@
 import json
+import os
 
 from jpconvert import build_pipeline, Pipeline
 
 
 def run(path: str, pipeline: Pipeline):
+    if os.path.exists('test/'):
+        os.chdir('test/')
+
     with open(path, 'r') as file:
         input_data = json.load(file)
 
@@ -11,8 +15,8 @@ def run(path: str, pipeline: Pipeline):
 
 
 def test_practice():
-    cells = run('test/ExampleCode.ipynb',
-                build_pipeline(True, False, False, False, False, False, False))
+    cells = run('ExampleCode.ipynb',
+                build_pipeline(True, False, False, False, False, False, False, False))
 
     # len
     assert len(cells) == 13
@@ -110,8 +114,8 @@ def test_practice():
 
 
 def test_solution():
-    cells = run('test/ExampleCode.ipynb',
-                build_pipeline(False, True, False, False, False, False, False))
+    cells = run('ExampleCode.ipynb',
+                build_pipeline(False, True, False, False, False, False, False, False))
 
     # len
     assert len(cells) == 10
@@ -188,8 +192,8 @@ def test_solution():
 
 
 def test_teaching():
-    cells = run('test/ExampleCode.ipynb',
-                build_pipeline(False, False, True, False, False, False, False))
+    cells = run('ExampleCode.ipynb',
+                build_pipeline(False, False, True, False, False, False, False, False))
 
     # len
     assert len(cells) == 8
@@ -252,8 +256,8 @@ def test_teaching():
 
 
 def test_remove_without_macros():
-    cells = run('test/ExampleCode.ipynb',
-                build_pipeline(True, False, False, True, False, False, False))
+    cells = run('ExampleCode.ipynb',
+                build_pipeline(True, False, False, True, False, False, False, False))
 
     # len
     assert len(cells) == 11
@@ -268,8 +272,8 @@ def test_remove_without_macros():
 
 
 def test_remove_empty():
-    cells = run('test/ExampleCode.ipynb',
-                build_pipeline(True, False, False, False, True, False, False))
+    cells = run('ExampleCode.ipynb',
+                build_pipeline(True, False, False, False, True, False, False, False))
 
     # len
     assert len(cells) == 11
@@ -280,8 +284,8 @@ def test_remove_empty():
 
 
 def test_toc():
-    cells = run('test/ExampleToc.ipynb',
-                build_pipeline(True, False, False, True, True, False, False))
+    cells = run('ExampleToc.ipynb',
+                build_pipeline(True, False, False, True, True, False, False, False))
 
     # 1
     assert cells[1]['cell_type'] == 'markdown'
@@ -320,8 +324,8 @@ def test_toc():
 
 
 def test_strip_lines():
-    cells = run('test/ExampleLines.ipynb',
-                build_pipeline(True, False, False, False, False, True, False))
+    cells = run('ExampleLines.ipynb',
+                build_pipeline(True, False, False, False, False, True, False, False))
 
     # len
     assert len(cells) == 12
@@ -350,8 +354,8 @@ def test_strip_lines():
 
 
 def test_trailing_lines():
-    cells = run('test/ExampleLines.ipynb',
-                build_pipeline(True, False, False, False, False, True, True))
+    cells = run('ExampleLines.ipynb',
+                build_pipeline(True, False, False, False, False, True, True, False))
 
     # len
     assert len(cells) == 12
@@ -377,3 +381,63 @@ def test_trailing_lines():
 
     # 11
     assert cells[11]['source'] == []
+
+
+def test_embed_image():
+    cells = run('ExampleImages.ipynb',
+                build_pipeline(True, False, False, False, False, False, False, True))
+
+    # 0
+    assert 'attachments' in cells[0]
+    assert cells[0]['source'] == [
+        "# ExampleImages\n",
+        "![png description](attachment:1.png)"
+    ]
+
+    # 1
+    assert 'attachments' in cells[1]
+    assert cells[1]['source'] == [
+        "Test\n",
+        "![jpeg description](attachment:2.jpg)"
+    ]
+
+    # 2
+    assert 'attachments' in cells[2]
+    assert cells[2]['source'] == [
+        "![url description](attachment:3.jpg)"
+    ]
+
+    # 3
+    assert 'attachments' in cells[3]
+    assert cells[3]['source'] == [
+        "Inline test with ![image](attachment:4.png) from the first cell."
+    ]
+
+    # 4
+    assert 'attachments' in cells[4]
+    assert cells[4]['source'] == [
+        "Inline test with![image](attachment:5.png)missing spaces."
+    ]
+
+    # 5
+    assert 'attachments' in cells[5]
+    assert cells[5]['source'] == [
+        "Two images in the same cell\n",
+        "![jpeg description](attachment:6.jpg)\n",
+        "![jpeg description](attachment:7.png)"
+    ]
+
+    # 6
+    assert 'attachments' in cells[6]
+    assert cells[6]['source'] == [
+        "Same images in the same cell\n",
+        "![jpeg description](attachment:8.jpg)\n",
+        "![jpeg description](attachment:8.jpg)"
+    ]
+
+    # 7
+    assert 'attachments' in cells[7]
+    assert cells[7]['source'] == [
+        "Two images in one line\n",
+        "text ![jpeg description](attachment:10.jpg) text ![jpeg description](attachment:9.png) text"
+    ]

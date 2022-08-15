@@ -23,6 +23,8 @@ parser.add_argument('--no-strip-lines', action='store_true', default=False,
                     help='do not strip lines')
 parser.add_argument('--keep-trailing', action='store_true', default=False,
                     help='keep empty trailing lines')
+parser.add_argument('--embed-images', action='store_true', default=False,
+                    help='embed images in output file')
 parser.add_argument('output', nargs='?', default='-',
                     help='output file (.ipynb) or - (stdout, default)')
 
@@ -55,7 +57,8 @@ else:
 # run pipeline
 pipeline = build_pipeline(practice, solution, teaching,
                           args.remove_without_macros, not args.keep_empty,
-                          not args.no_strip_lines, not args.keep_trailing)
+                          not args.no_strip_lines, not args.keep_trailing,
+                          args.embed_images)
 output_data = pipeline.run(input_data)
 
 # write output

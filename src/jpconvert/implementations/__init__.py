@@ -1,3 +1,4 @@
+from .EmbedImages import EmbedImages
 from .RemoveCellByMacro import RemoveCellByMacro
 from .RemoveEmptyCell import RemoveEmptyCell
 from .RemoveTrailingLines import RemoveTrailingLines

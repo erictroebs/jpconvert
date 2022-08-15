@@ -32,8 +32,9 @@ If no input file is specified, `stdin` is used instead. If no output file is spe
 | `--solution` / `-s`       | keep cells containing `#jp-solution`          |
 | `--remove-without-macros` | remove cells that do not contain any macro    |
 | `--keep-empty`            | do not remove empty cells                     |
- | `--no-strip-lines`        | do not remove space or tabs from line endings |
+| `--no-strip-lines`        | do not remove space or tabs from line endings |
 | `--keep-trailing`         | do not remove trailing lines                  |
+| `--embed-images`          | embed images in output file                   |
 
 Multiple macros can be used per cell. Only code cells with the macro matching the output options are kept. Macros themselves are removed from the code cells.
 
