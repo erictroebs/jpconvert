@@ -1,7 +1,7 @@
 import json
 import os
 
-from jpconvert import build_pipeline, Pipeline
+from jpconvert import build_pipeline, Pipeline, EmbedImages
 
 
 def run(path: str, pipeline: Pipeline):
@@ -11,7 +11,12 @@ def run(path: str, pipeline: Pipeline):
     with open(path, 'r') as file:
         input_data = json.load(file)
 
-    return pipeline.run(input_data)['cells']
+    output = pipeline.run(input_data)
+
+    with open('output.ipynb', 'w') as file:
+        json.dump(output, file)
+
+    return output['cells']
 
 
 def test_practice():
@@ -440,4 +445,25 @@ def test_embed_image():
     assert cells[7]['source'] == [
         "Two images in one line\n",
         "text ![jpeg description](attachment:10.jpg) text ![jpeg description](attachment:9.png) text"
+    ]
+
+    # 8
+    png_b64, *_ = EmbedImages.base64encode('example.png')
+    assert cells[8]['source'] == [
+        'Sample image included via html tag\n',
+        f'<img src="data:image/png;base64,{png_b64}">'
+    ]
+
+    # 9
+    jpg_b64, *_ = EmbedImages.base64encode('https://picsum.photos/id/1024/300/200')
+    assert cells[9]['source'] == [
+        'Remote image included via html tag with alt attribute\n',
+        f'<img alt="birb" src="data:image/jpeg;base64,{jpg_b64}">'
+    ]
+
+    # 10
+    png_b64, *_ = EmbedImages.base64encode('example.png')
+    assert cells[10]['source'] == [
+        'Two img tags in one line\n',
+        f'<img src="data:image/png;base64,{png_b64}"><img src="data:image/png;base64,{png_b64}">'
     ]
