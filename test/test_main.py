@@ -467,3 +467,37 @@ def test_embed_image():
         'Two img tags in one line\n',
         f'<img src="data:image/png;base64,{png_b64}"><img src="data:image/png;base64,{png_b64}">'
     ]
+
+    # 11
+    assert cells[11]['source'] == [
+        'An already attached image:\n',
+        '![example.png](attachment:example.png)'
+    ]
+
+    # 12
+    assert 'attachments' in cells[12]
+    assert cells[12]['source'] == [
+        'svg:\n',
+        '![example.svg](attachment:11.svg)'
+    ]
+
+    # 13
+    svg_b64, *_ = EmbedImages.base64encode('example.svg')
+    assert cells[13]['source'] == [
+        'svg via img tag:\n',
+        f'<img src="data:image/svg+xml;base64,{svg_b64}">'
+    ]
+
+    # 14
+    assert cells[14]['source'] == [
+        'An already attached svg:\n',
+        '![example.svg](attachment:example.svg)'
+    ]
+
+    # 15
+    svg_b64, *_ = EmbedImages.base64encode('example_gray.png')
+    assert cells[15]['source'] == [
+        'images included as base64 string:\n',
+        f'![test](data:image/png;base64,{svg_b64})\n',
+        f'<img src="data:image/png;base64,{svg_b64}">'
+    ]

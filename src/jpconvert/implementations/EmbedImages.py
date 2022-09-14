@@ -12,7 +12,8 @@ from ..operations import MapCell
 class EmbedImages(MapCell):
     FILE_EXTENSIONS = {
         'image/jpeg': 'jpg',
-        'image/png': 'png'
+        'image/png': 'png',
+        'image/svg+xml': 'svg'
     }
 
     def __init__(self):
@@ -59,6 +60,10 @@ class EmbedImages(MapCell):
             for match in matches:
                 # extract description and path
                 description, path = match.groups()
+
+                # skip already attached images
+                if path.startswith('attachment:') or path.startswith('data:'):
+                    continue
 
                 # store in attachments
                 if path not in attachments:
