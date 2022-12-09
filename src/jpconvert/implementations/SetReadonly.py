@@ -16,9 +16,9 @@ class SetReadonly(MapCell):
         for line in cell['source']:
             line = line.strip()
 
-            if line == '#jp-practice':
+            if line in ['#jp-practice', '--jp-practice']:
                 practice = True
-            elif line in ['#jp-practice-ro', '#jp-readonly']:
+            elif line in ['#jp-practice-ro', '--jp-practice-ro', '#jp-readonly', '--jp-readonly']:
                 readonly = True
 
         # set readonly

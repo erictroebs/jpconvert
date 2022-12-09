@@ -15,9 +15,9 @@ class TableOfContents(FilterCell):
             return True
 
         # find jp-toc macros
-        match = re.match(r'^#jp-toc((<|<=|==|>=|>)(\d+)((<|<=|==|>=|>)(\d+))?)?$', cell['source'][0].strip())
+        match = re.match(r'^(#|--)jp-toc((<|<=|==|>=|>)(\d+)((<|<=|==|>=|>)(\d+))?)?$', cell['source'][0].strip())
         if match is not None:
-            _, fc, fv, _, sc, sv = match.groups()
+            _, _, fc, fv, _, sc, sv = match.groups()
 
             # parse conditions
             min_level = 1
