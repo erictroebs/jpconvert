@@ -5,7 +5,8 @@ from .implementations import *
 def build_pipeline(practice: bool, solution: bool, teaching: bool,
                    remove_without_macros: bool, remove_empty: bool,
                    strip_lines: bool, remove_trailing_lines: bool,
-                   embed_images: bool) -> Pipeline:
+                   embed_images: bool,
+                   force_readonly: bool, force_undeletable: bool) -> Pipeline:
     pipeline = Pipeline()
 
     pipeline.add(RemoveCellByMacro(practice, solution, teaching, remove_without_macros))
@@ -13,8 +14,10 @@ def build_pipeline(practice: bool, solution: bool, teaching: bool,
 
     pipeline.add(TableOfContents())
 
-    pipeline.add(SetReadonly())
-    pipeline.add(SetUndeletable())
+    pipeline.add(SetReadonly(force_readonly))
+
+    if force_undeletable:
+        pipeline.add(SetUndeletable())
 
     pipeline.add(RemoveMacros())
 

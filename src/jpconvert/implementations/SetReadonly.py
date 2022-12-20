@@ -4,10 +4,14 @@ from ..operations import MapCell
 
 
 class SetReadonly(MapCell):
+    def __init__(self, force: bool):
+        self._force: bool = force
+
     def map_cell(self, cell: Dict) -> Dict:
         # set all markdown cells to readonly
         if cell['cell_type'] != 'code':
             cell['metadata']['editable'] = False
+            return cell
 
         # find practice macro
         practice = False
@@ -22,7 +26,7 @@ class SetReadonly(MapCell):
                 readonly = True
 
         # set readonly
-        if not practice or readonly:
+        if (not practice and self._force) or readonly:
             cell['metadata']['editable'] = False
 
         return cell

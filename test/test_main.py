@@ -21,7 +21,7 @@ def run(path: str, pipeline: Pipeline):
 
 def test_practice():
     cells = run('ExampleCode.ipynb',
-                build_pipeline(True, False, False, False, False, False, False, False))
+                build_pipeline(True, False, False, False, False, False, False, False, True, True))
 
     # len
     assert len(cells) == 13
@@ -120,7 +120,7 @@ def test_practice():
 
 def test_solution():
     cells = run('ExampleCode.ipynb',
-                build_pipeline(False, True, False, False, False, False, False, False))
+                build_pipeline(False, True, False, False, False, False, False, False, True, True))
 
     # len
     assert len(cells) == 10
@@ -198,7 +198,7 @@ def test_solution():
 
 def test_teaching():
     cells = run('ExampleCode.ipynb',
-                build_pipeline(False, False, True, False, False, False, False, False))
+                build_pipeline(False, False, True, False, False, False, False, False, True, True))
 
     # len
     assert len(cells) == 8
@@ -262,7 +262,7 @@ def test_teaching():
 
 def test_remove_without_macros():
     cells = run('ExampleCode.ipynb',
-                build_pipeline(True, False, False, True, False, False, False, False))
+                build_pipeline(True, False, False, True, False, False, False, False, True, True))
 
     # len
     assert len(cells) == 11
@@ -278,7 +278,7 @@ def test_remove_without_macros():
 
 def test_remove_empty():
     cells = run('ExampleCode.ipynb',
-                build_pipeline(True, False, False, False, True, False, False, False))
+                build_pipeline(True, False, False, False, True, False, False, False, True, True))
 
     # len
     assert len(cells) == 11
@@ -290,7 +290,7 @@ def test_remove_empty():
 
 def test_toc():
     cells = run('ExampleToc.ipynb',
-                build_pipeline(True, False, False, True, True, False, False, False))
+                build_pipeline(True, False, False, True, True, False, False, False, True, True))
 
     # 1
     assert cells[1]['cell_type'] == 'markdown'
@@ -330,7 +330,7 @@ def test_toc():
 
 def test_strip_lines():
     cells = run('ExampleLines.ipynb',
-                build_pipeline(True, False, False, False, False, True, False, False))
+                build_pipeline(True, False, False, False, False, True, False, False, True, True))
 
     # len
     assert len(cells) == 12
@@ -360,7 +360,7 @@ def test_strip_lines():
 
 def test_trailing_lines():
     cells = run('ExampleLines.ipynb',
-                build_pipeline(True, False, False, False, False, True, True, False))
+                build_pipeline(True, False, False, False, False, True, True, False, True, True))
 
     # len
     assert len(cells) == 12
@@ -390,7 +390,7 @@ def test_trailing_lines():
 
 def test_embed_image():
     cells = run('ExampleImages.ipynb',
-                build_pipeline(True, False, False, False, False, False, False, True))
+                build_pipeline(True, False, False, False, False, False, False, True, True, True))
 
     # 0
     assert 'attachments' in cells[0]

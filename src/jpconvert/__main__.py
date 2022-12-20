@@ -25,6 +25,10 @@ parser.add_argument('--keep-trailing', action='store_true', default=False,
                     help='keep empty trailing lines')
 parser.add_argument('--no-embed-images', action='store_true', default=False,
                     help='do not embed images in output file')
+parser.add_argument('--no-force-readonly', action='store_true', default=False,
+                    help='do not automatically set code cells to readonly')
+parser.add_argument('--no-set-undeletable', action='store_true', default=False,
+                    help='do not protect cells from deletion')
 parser.add_argument('output', nargs='?', default='-',
                     help='output file (.ipynb) or - (stdout, default)')
 
@@ -58,7 +62,8 @@ else:
 pipeline = build_pipeline(practice, solution, teaching,
                           args.remove_without_macros, not args.keep_empty,
                           not args.no_strip_lines, not args.keep_trailing,
-                          not args.no_embed_images)
+                          not args.no_embed_images,
+                          not args.no_force_readonly, not args.no_set_undeletable)
 output_data = pipeline.run(input_data)
 
 # write output
