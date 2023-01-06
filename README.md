@@ -114,7 +114,7 @@ Up to two conditionals can be added to control the table's depth. It uses the le
 filtering. The following example shows how to create a table of contents from level 2 to 5.
 
 ```python
-# jp-toc>=2<6
+#jp-toc>=2<6
 ```
 
 ### Embedding Images
