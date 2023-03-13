@@ -23,6 +23,15 @@ class RemoveCellByMacro(FilterCell):
         solution = False
         teaching = False
 
+        if 'metadata' in cell and 'tags' in cell['metadata']:
+            for tag in cell['metadata']['tags']:
+                if tag in ['jp-practice', 'jp-practice-ro']:
+                    practice = True
+                elif tag == 'jp-solution':
+                    solution = True
+                elif tag == 'jp-teaching':
+                    teaching = True
+
         for line in cell['source']:
             line = line.strip()
 

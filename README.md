@@ -71,13 +71,15 @@ python -m jpconvert <input> [<output>] [<options>]
 JPConvert provides several macros to mark cells for a specific task. Only code cells with the macro matching the output
 options are kept.
 
-| cli option                | description                                   |
-|---------------------------|-----------------------------------------------|
-| `--practice` / `-p`       | keep cells containing `#jp-practice`          |
-| `--teaching` / `-t`       | keep cells containing `#jp-teaching`          |
-| `--solution` / `-s`       | keep cells containing `#jp-solution`          |
+| cli option          | description                          |
+|---------------------|--------------------------------------|
+| `--practice` / `-p` | keep cells containing `#jp-practice` |
+| `--teaching` / `-t` | keep cells containing `#jp-teaching` |
+| `--solution` / `-s` | keep cells containing `#jp-solution` |
 
 Multiple macros can be used per cell. Macros themselves are removed from the code cells.
+
+Instead of `#` you can also use `--`. The macros without any prefix can also be added as tags to individual cells.
 
 It is also possible to remove any cells without macros. Add `--remove-without-macros` to the command line parameters
 to activate this behavior.

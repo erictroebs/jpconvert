@@ -24,7 +24,7 @@ def test_practice():
                 build_pipeline(True, False, False, False, False, False, False, False, True, True))
 
     # len
-    assert len(cells) == 13
+    assert len(cells) == 18
 
     # 0
     cell = cells[0]
@@ -117,13 +117,48 @@ def test_practice():
     assert 'deletable' in cell['metadata'] and not cell['metadata']['deletable']
     assert 'editable' in cell['metadata'] and not cell['metadata']['editable']
 
+    # 13
+    cell = cells[13]
+    assert cell['cell_type'] == 'markdown'
+    assert cell['source'] == ['Das ganze nochmal über Tags:']
+    assert 'deletable' in cell['metadata'] and not cell['metadata']['deletable']
+    assert 'editable' in cell['metadata'] and not cell['metadata']['editable']
+
+    # 14
+    cell = cells[14]
+    assert cell['cell_type'] == 'code'
+    assert cell['source'] == ["a = 'practice'"]
+    assert 'deletable' in cell['metadata'] and not cell['metadata']['deletable']
+    assert 'editable' not in cell['metadata'] or cell['metadata']['editable']
+
+    # 15
+    cell = cells[15]
+    assert cell['cell_type'] == 'code'
+    assert cell['source'] == ['b = a']
+    assert 'deletable' in cell['metadata'] and not cell['metadata']['deletable']
+    assert 'editable' not in cell['metadata'] or cell['metadata']['editable']
+
+    # 16
+    cell = cells[16]
+    assert cell['cell_type'] == 'code'
+    assert cell['source'] == ["y = 'readonly'"]
+    assert 'deletable' in cell['metadata'] and not cell['metadata']['deletable']
+    assert 'editable' in cell['metadata'] and not cell['metadata']['editable']
+
+    # 17
+    cell = cells[17]
+    assert cell['cell_type'] == 'code'
+    assert cell['source'] == ["z = 'readonly'"]
+    assert 'deletable' in cell['metadata'] and not cell['metadata']['deletable']
+    assert 'editable' in cell['metadata'] and not cell['metadata']['editable']
+
 
 def test_solution():
     cells = run('ExampleCode.ipynb',
                 build_pipeline(False, True, False, False, False, False, False, False, True, True))
 
     # len
-    assert len(cells) == 10
+    assert len(cells) == 13
 
     # 0
     cell = cells[0]
@@ -195,13 +230,34 @@ def test_solution():
     assert 'deletable' in cell['metadata'] and not cell['metadata']['deletable']
     assert 'editable' in cell['metadata'] and not cell['metadata']['editable']
 
+    # 10
+    cell = cells[10]
+    assert cell['cell_type'] == 'markdown'
+    assert cell['source'] == ['Das ganze nochmal über Tags:']
+    assert 'deletable' in cell['metadata'] and not cell['metadata']['deletable']
+    assert 'editable' in cell['metadata'] and not cell['metadata']['editable']
+
+    # 11
+    cell = cells[11]
+    assert cell['cell_type'] == 'code'
+    assert cell['source'] == ["a = 'solution'"]
+    assert 'deletable' in cell['metadata'] and not cell['metadata']['deletable']
+    assert 'editable' in cell['metadata'] and not cell['metadata']['editable']
+
+    # 12
+    cell = cells[12]
+    assert cell['cell_type'] == 'code'
+    assert cell['source'] == ['b = a']
+    assert 'deletable' in cell['metadata'] and not cell['metadata']['deletable']
+    assert 'editable' not in cell['metadata'] or cell['metadata']['editable']
+
 
 def test_teaching():
     cells = run('ExampleCode.ipynb',
                 build_pipeline(False, False, True, False, False, False, False, False, True, True))
 
     # len
-    assert len(cells) == 8
+    assert len(cells) == 11
 
     # 0
     cell = cells[0]
@@ -259,13 +315,34 @@ def test_teaching():
     assert 'deletable' in cell['metadata'] and not cell['metadata']['deletable']
     assert 'editable' in cell['metadata'] and not cell['metadata']['editable']
 
+    # 8
+    cell = cells[8]
+    assert cell['cell_type'] == 'markdown'
+    assert cell['source'] == ['Das ganze nochmal über Tags:']
+    assert 'deletable' in cell['metadata'] and not cell['metadata']['deletable']
+    assert 'editable' in cell['metadata'] and not cell['metadata']['editable']
+
+    # 9
+    cell = cells[9]
+    assert cell['cell_type'] == 'code'
+    assert cell['source'] == ["a = 'teaching'"]
+    assert 'deletable' in cell['metadata'] and not cell['metadata']['deletable']
+    assert 'editable' in cell['metadata'] and not cell['metadata']['editable']
+
+    # 10
+    cell = cells[10]
+    assert cell['cell_type'] == 'code'
+    assert cell['source'] == ['b = a']
+    assert 'deletable' in cell['metadata'] and not cell['metadata']['deletable']
+    assert 'editable' not in cell['metadata'] or cell['metadata']['editable']
+
 
 def test_remove_without_macros():
     cells = run('ExampleCode.ipynb',
                 build_pipeline(True, False, False, True, False, False, False, False, True, True))
 
     # len
-    assert len(cells) == 11
+    assert len(cells) == 16
 
     # 5
     cell = cells[5]
@@ -281,7 +358,7 @@ def test_remove_empty():
                 build_pipeline(True, False, False, False, True, False, False, False, True, True))
 
     # len
-    assert len(cells) == 11
+    assert len(cells) == 16
 
     # check for empty cells
     for cell in cells:

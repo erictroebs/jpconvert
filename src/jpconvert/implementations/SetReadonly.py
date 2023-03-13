@@ -17,6 +17,13 @@ class SetReadonly(MapCell):
         practice = False
         readonly = False
 
+        if 'metadata' in cell and 'tags' in cell['metadata']:
+            for tag in cell['metadata']['tags']:
+                if tag == 'jp-practice':
+                    practice = True
+                elif tag in ['jp-practice-ro', 'jp-readonly']:
+                    readonly = True
+
         for line in cell['source']:
             line = line.strip()
 

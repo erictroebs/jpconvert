@@ -19,7 +19,8 @@ def build_pipeline(practice: bool, solution: bool, teaching: bool,
     if force_undeletable:
         pipeline.add(SetUndeletable())
 
-    pipeline.add(RemoveMacros())
+    pipeline.add(RemoveMacrosFromCode())
+    pipeline.add(RemoveMacrosFromTags())
 
     if strip_lines:
         pipeline.add(StripLines())
