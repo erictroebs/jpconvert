@@ -1,4 +1,4 @@
-from typing import Dict
+from nbformat import NotebookNode
 
 from ..operations import FilterCell
 
@@ -10,7 +10,7 @@ class RemoveCellByMacro(FilterCell):
         self._teaching: bool = teaching
         self._remove_without_macros: bool = remove_without_macros
 
-    def filter_cell(self, cell: Dict) -> bool:
+    def filter_cell(self, cell: NotebookNode) -> bool:
         if not self._practice and not self._solution and not self._teaching:
             return True
 

@@ -5,7 +5,7 @@ with open('README.md', 'r', encoding='utf-8') as file:
 
 setup(
     name='jpconvert',
-    version='0.3.13',
+    version='0.3.14',
     author='Eric Tröbs',
     author_email='eric.troebs@tu-ilmenau.de',
     description='macros for Jupyter Notebooks',
@@ -22,8 +22,9 @@ setup(
     ],
     package_dir={'': 'src'},
     packages=find_packages(where='src'),
-    python_requires='>=3.6',
+    python_requires='>=3.7',
     install_requires=[
+        'nbformat==5.8.0',
         'requests==2.28.2',
         'python-magic==0.4.27'
     ]

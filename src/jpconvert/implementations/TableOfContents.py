@@ -1,15 +1,17 @@
 import re
-from typing import Dict, List, Tuple
+from typing import List, Tuple
+
+from nbformat import NotebookNode
 
 from ..operations import FilterCell
 
 
 class TableOfContents(FilterCell):
     def __init__(self):
-        self._cells: List[Tuple[Dict, int, int]] = []
+        self._cells: List[Tuple[NotebookNode, int, int]] = []
         self._entries: List[Tuple[int, str]] = []
 
-    def filter_cell(self, cell: Dict) -> bool:
+    def filter_cell(self, cell: NotebookNode) -> bool:
         # skip empty cells
         if 'source' not in cell or len(cell['source']) == 0:
             return True
@@ -39,11 +41,12 @@ class TableOfContents(FilterCell):
             cell['source'].append('do not remove during `RemoveEmpty`')
             self._cells.append((cell, min_level, max_level))
 
-        # do not look for headlines in anything other than markdown cells
+        # do not look for headcell['source'] in anything other than markdown cells
         if cell['cell_type'] != 'markdown':
             return True
 
-        # find headlines
+        # find headcell['source']
+
         for line in cell['source']:
             match = re.match(r'^(#+) (.*)$', line)
             if match is not None:

@@ -1,4 +1,6 @@
-from typing import List, Dict
+from typing import List
+
+from nbformat import NotebookNode
 
 from .operations import Operation
 
@@ -10,7 +12,7 @@ class Pipeline:
     def add(self, op: Operation):
         self._ops.append(op)
 
-    def run(self, file: Dict, remove_toolbar: bool = True) -> Dict:
+    def run(self, file: NotebookNode, remove_toolbar: bool = True) -> NotebookNode:
         # remove tag bar
         if remove_toolbar and 'celltoolbar' in file['metadata']:
             del file['metadata']['celltoolbar']
@@ -18,7 +20,7 @@ class Pipeline:
         # map and filter cells
         i = 0
         while i < len(file['cells']):
-            cell = file['cells'][i]
+            cell: NotebookNode = file['cells'][i]
 
             for op in self._ops:
                 cell = op(cell)
@@ -30,7 +32,7 @@ class Pipeline:
                 i += 1
 
         # run exit functions
-        for op in self._ops:
+        for op in reversed(self._ops):
             op.exit()
 
         # return data

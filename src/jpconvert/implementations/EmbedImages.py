@@ -5,6 +5,7 @@ from typing import List
 
 import magic
 import requests
+from nbformat import NotebookNode
 
 from ..operations import MapCell
 
@@ -45,7 +46,7 @@ class EmbedImages(MapCell):
         # return tuple
         return base64_data, mime_type, file_ext
 
-    def map_cell(self, cell: Dict):
+    def map_cell(self, cell: NotebookNode):
         # skip cells not containing markdown
         if cell['cell_type'] != 'markdown':
             return cell

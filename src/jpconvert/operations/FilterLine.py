@@ -1,10 +1,10 @@
-from typing import Dict
+from nbformat import NotebookNode
 
 from . import MapCell
 
 
 class FilterLine(MapCell):
-    def map_cell(self, cell: Dict) -> Dict:
+    def map_cell(self, cell: NotebookNode) -> NotebookNode:
         i = 0
         while i < len(cell['source']):
             if self.filter_line(cell['source'][i]):

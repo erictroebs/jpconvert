@@ -1,8 +1,8 @@
-from typing import Dict
+from nbformat import NotebookNode
 
 from ..operations import FilterCell
 
 
 class RemoveEmptyCell(FilterCell):
-    def filter_cell(self, cell: Dict) -> bool:
-        return len(cell['source']) > 0
+    def filter_cell(self, cell: NotebookNode) -> bool:
+        return len(cell['source']) > 0 and cell['source'] != ['']

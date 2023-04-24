@@ -1,8 +1,10 @@
-from typing import Dict, Optional
+from typing import Optional
+
+from nbformat import NotebookNode
 
 
 class Operation:
-    def __call__(self, cell: Dict) -> Optional[Dict]:
+    def __call__(self, cell: NotebookNode) -> Optional[NotebookNode]:
         raise NotImplementedError
 
     def exit(self):

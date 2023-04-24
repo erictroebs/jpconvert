@@ -1,4 +1,4 @@
-from typing import Dict
+from nbformat import NotebookNode
 
 from ..operations import MapCell
 
@@ -7,7 +7,7 @@ class SetReadonly(MapCell):
     def __init__(self, force: bool):
         self._force: bool = force
 
-    def map_cell(self, cell: Dict) -> Dict:
+    def map_cell(self, cell: NotebookNode) -> NotebookNode:
         # set all markdown cells to readonly
         if cell['cell_type'] != 'code':
             cell['metadata']['editable'] = False
