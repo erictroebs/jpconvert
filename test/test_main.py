@@ -549,9 +549,9 @@ def test_embed_image():
 
 
 def test_remove_output():
-    cells = run('ExampleCode.ipynb',
+    cells = run('WithOutput.ipynb',
                 build_pipeline(False, False, False, False, False, False, False, False, False, False, True))
 
     for cell in cells:
         assert 'execution_count' not in cell or cell['execution_count'] is None
-        assert 'output' not in cell or cell['output'] == []
+        assert 'outputs' not in cell or cell['outputs'] == []

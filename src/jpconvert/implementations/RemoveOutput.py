@@ -10,7 +10,7 @@ class RemoveOutput(MapCell):
 
         if 'execution_count' in cell:
             cell['execution_count'] = None
-        if 'output' in cell:
-            cell['output'] = []
+        if 'outputs' in cell:
+            cell['outputs'] = []
 
         return cell
