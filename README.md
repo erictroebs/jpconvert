@@ -35,13 +35,6 @@ If you call JPConvert with the `--solution` option, the first cell is kept and t
 a = a + 1
 ```
 
-If no input file is specified, `stdin` is used instead. If no output file is specified, `stdout` is used instead. It is
-probably a good idea to use `nbstripout` with JPConvert to remove embedded output data:
-
-```bash
-python -m jpconvert input.ipynb --practice | nbstripout > output.ipynb
-```
-
 ## Setup
 
 The preferred way to use JPConvert is in a virtual environment:
@@ -129,3 +122,10 @@ JPConvert also embeds files that are displayed using HTML tags. These provide th
 while in markdown the size is determined only by the resolution.
 
 Add the command line parameter `--no-embed-images` to disable this behavior.
+
+### Stripping Output
+
+`execution_count` is set to `None` and `output` is set to an empty array for each individual code cell. (Which is
+basically the functionality of *nbstripout*.)
+
+Add the command line parameter `--keep-output` to disable this behavior.

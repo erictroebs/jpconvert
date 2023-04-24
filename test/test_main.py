@@ -546,3 +546,12 @@ def test_embed_image():
     assert cells[15]['source'] == 'images included as base64 string:\n' \
                                   f'![test](data:image/png;base64,{svg_b64})\n' \
                                   f'<img src="data:image/png;base64,{svg_b64}">'
+
+
+def test_remove_output():
+    cells = run('ExampleCode.ipynb',
+                build_pipeline(False, False, False, False, False, False, False, False, False, False, True))
+
+    for cell in cells:
+        assert 'execution_count' not in cell or cell['execution_count'] is None
+        assert 'output' not in cell or cell['output'] == []

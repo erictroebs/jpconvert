@@ -37,6 +37,9 @@ def build_pipeline(practice: bool, solution: bool, teaching: bool,
     if embed_images:
         pipeline.add(EmbedImages())
 
+    if remove_output:
+        pipeline.add(RemoveOutput())
+
     pipeline.add(JoinSource())
 
     return pipeline
